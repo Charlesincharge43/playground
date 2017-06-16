@@ -1,21 +1,23 @@
-board=[ ["I","L","A","W"],
-        ["B","N","G","E"],
-        ["I","U","A","O"],
-        ["A","S","R","L"] ]
+board=[
+  ["E","A","R","A"],
+  ["N","L","E","C"],
+  ["I","A","I","S"],
+  ["B","Y","O","R"]
+];
 
 function Bwch(boggleBoard){
   this.board=boggleBoard;
   this.transformedBoard;
 }
 
-function bwch(str, boggleBoard){
-  for(let i=0;i<str.length;i++){
-
-    let currVertex= str[i];
-    let currPos=findPos(currVertex,boggleBoard);
-    console.log('i',i,'currVertex ',currVertex)
-    console.log(validMoves(currPos.firstIdx,currPos.secondIdx,boggleBoard));
+Bwch.prototype.bwch=function(str){
+  this.transform();
+  for(let arr of this.transformedBoard){
+    for(let vertexObj of arr){
+      if(this.bwchSingleVertex(vertexObj,str)) return true;
+    }
   }
+  return false;
 }
 
 Bwch.prototype.transform=function(){
@@ -26,33 +28,34 @@ Bwch.prototype.transform=function(){
   })
 }
 
-Bwch.prototype.bwchSingleVertex=function(x,y,str,depth=0){
-  if(depth)
-  let validMoves=this.validMoves(x,y);
-  for(let vertex of validMoves){
-    this.
+Bwch.prototype.bwchSingleVertex=function(vertexObj,str,visited={},depth=0){//vertexObj is an element in transformedBoard
+  let loc=vertexObj.location.x+','+vertexObj.location.y;
+  console.log('compare part of string |',str[depth],'| with vertex ',vertexObj.vertex);
+  console.log('loc ',loc,'visited ',visited)
+  if(visited[loc]) return false;
+  if(str[depth]===vertexObj.vertex){
+    let newVisited=Object.assign({[loc]:true},visited)
+    if(depth===str.length-1) return true;
+    let validMoves=this.validMoves(vertexObj);
+    return validMoves.some(neighbor=>{
+      return this.bwchSingleVertex(neighbor,str,newVisited,depth+1)
+    })
   }
+  return false;
 }
 
-Bwch.prototype.validMoves=function(x,y){
+Bwch.prototype.validMoves=function(vertexObj){
+  let x= vertexObj.location.x;
+  let y= vertexObj.location.y;
   let unfiltered= [
-    this.transformedBoard[x-1] && this.transformedBoard[x-1][y-1],
-    this.transformedBoard[x-1] && this.transformedBoard[x-1][y],
-    this.transformedBoard[x-1] && this.transformedBoard[x-1][y+1],
-    this.transformedBoard[x] && this.transformedBoard[x][y-1],
-    this.transformedBoard[x] && this.transformedBoard[x][y+1],
-    this.transformedBoard[x+1] && this.transformedBoard[x+1][y-1],
-    this.transformedBoard[x+1] && this.transformedBoard[x+1][y],
-    this.transformedBoard[x+1] && this.transformedBoard[x+1][y+1],
+    this.transformedBoard[y-1] && this.transformedBoard[y-1][x-1],
+    this.transformedBoard[y-1] && this.transformedBoard[y-1][x],
+    this.transformedBoard[y-1] && this.transformedBoard[y-1][x+1],
+    this.transformedBoard[y] && this.transformedBoard[y][x-1],
+    this.transformedBoard[y] && this.transformedBoard[y][x+1],
+    this.transformedBoard[y+1] && this.transformedBoard[y+1][x-1],
+    this.transformedBoard[y+1] && this.transformedBoard[y+1][x],
+    this.transformedBoard[y+1] && this.transformedBoard[y+1][x+1],
   ];
   return unfiltered.filter(el=>el);
 }
-
-// Bwch.prototype.findPos=function(vertex){
-//   let firstIdx, secondIdx;
-//   for(firstIdx=0; firstIdx<this.board.length; firstIdx++){
-//     secondIdx=this.board[firstIdx].indexOf(vertex);
-//     if(secondIdx!== -1) break;
-//   }
-//   return {firstIdx,secondIdx}
-// }
