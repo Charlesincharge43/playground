@@ -117,7 +117,7 @@ $Promise.resolve = function(val){
   }
 };
 
-let a = Promise.resolve(()=>5);
+let a = Promise.resolve((resolve) => resolve(5));
 a
   .then(val => val)
   .then(console.log);
@@ -130,7 +130,7 @@ a
   .then('blah')
   .then(console.log);
 
-let $a = $Promise.resolve(()=>5);
+let $a = $Promise.resolve((resolve) => resolve(5));
 $a
   .then(val => val)
   .then(console.log);
@@ -140,5 +140,10 @@ $a
   .then(console.log);
 
 $a
-.then('blah')
-.then(console.log);
+  .then('blah')
+  .then(console.log);
+
+
+// //if pA is fulfilled but has no success handler, pB is fulfilled with pA's value
+//
+// let pA = $Promise.resolve((resolve) => resolve(5));
