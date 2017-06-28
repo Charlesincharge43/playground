@@ -42,7 +42,7 @@ Cat.prototype = Object.create(Mammal.prototype);
 // (6): Assign prototype constructor property so you know future instances of
 // Cat belongs to Cat
 // (this is required because you lose the constructor property when you do
-// Cat.prototype assignment
+// Cat.prototype assignment)
 Cat.prototype.constructor = Cat;
 
 // (7): Give cat.prototype its own haveBaby method different from that of Mammal's.
