@@ -2,7 +2,7 @@
 navigator.geolocation.getCurrentPosition(position=>{
     console.log(position);//or whatever you want to do with the position
   },
-  (msg)=>reject(‘Please enable your GPS position future.‘),
+  (msg)=>reject('Please enable your GPS position future.'),
   {enableHighAccuracy: true}
 )
 
@@ -17,7 +17,7 @@ function promisifiedGetCurrPos() {
             // reject for the errors and resolve for the results
             return resolve(position)
         },
-        (msg)=>reject(‘Please enable your GPS position future.‘),
+        (msg)=>reject('Please enable your GPS position future.'),
         {enableHighAccuracy: true}
         )
     })
