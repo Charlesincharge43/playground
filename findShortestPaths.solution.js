@@ -35,28 +35,28 @@ var shortestPaths = function(graph, start, end){
   return paths;
 };
 
-//DFS shortestPaths
-var shortestPaths = function(graph, current, end, path = []){
-  path = path.concat(current);//DO NOT push... dont want to mutate the path
-  var workingPathsArr = [];
-  var shortestPathsArr = [];
-  if (current === end) return [path];//base case
-  else {
-    for (var neighbor of graph[current]){
-      if (path.indexOf(neighbor) === -1){//recursive (and base case): if neighbor IS in path, don't do anything.., otherwise call shortestPaths
-        workingPathsArr = workingPathsArr.concat(shortestPaths(graph, neighbor, end, path));
-      }
-    }
-    var shortestlength = Infinity;
-    for ( var i = 0; i < workingPathsArr.length; i++){
-      if (workingPathsArr[i].length < shortestlength){
-        shortestlength = workingPathsArr[i].length;
-        shortestPathsArr = [workingPathsArr[i]];
-      }
-      else if (workingPathsArr[i].length === shortestlength){
-        shortestPathsArr.push(workingPathsArr[i]);
-      }
-    }
-    return shortestPathsArr;
-  }
-};
+//DFS shortestPaths  --- NOTE: this will NOT pass the final shortestPaths test spec!
+// var shortestPaths = function(graph, current, end, path = []){
+//   path = path.concat(current);//DO NOT push... dont want to mutate the path
+//   var workingPathsArr = [];
+//   var shortestPathsArr = [];
+//   if (current === end) return [path];//base case
+//   else {
+//     for (var neighbor of graph[current]){
+//       if (path.indexOf(neighbor) === -1){//recursive (and base case): if neighbor IS in path, don't do anything.., otherwise call shortestPaths
+//         workingPathsArr = workingPathsArr.concat(shortestPaths(graph, neighbor, end, path));
+//       }
+//     }
+//     var shortestlength = Infinity;
+//     for ( var i = 0; i < workingPathsArr.length; i++){
+//       if (workingPathsArr[i].length < shortestlength){
+//         shortestlength = workingPathsArr[i].length;
+//         shortestPathsArr = [workingPathsArr[i]];
+//       }
+//       else if (workingPathsArr[i].length === shortestlength){
+//         shortestPathsArr.push(workingPathsArr[i]);
+//       }
+//     }
+//     return shortestPathsArr;
+//   }
+// };
