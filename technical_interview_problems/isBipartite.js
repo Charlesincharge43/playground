@@ -4,13 +4,22 @@ function isBipartite(graph){
   // which will result in a false negative)
     for (let edge of graph.edges){
       let sourceIdx, targetIdx
-      if (edge[0] === vertex){ // make this into this ternary form later
-        sourceIdx = 0
-        targetIdx = 1
-      } else if (edge[1] === vertex){
-        sourceIdx = 1
-        targetIdx = 0
-      } else {
+      // non ternary form
+      //
+      // if (edge[0] === vertex){
+      //   sourceIdx = 0
+      //   targetIdx = 1
+      // } else if (edge[1] === vertex){
+      //   sourceIdx = 1
+      //   targetIdx = 0
+      // } else {
+      //   continue
+      // }
+      //
+      // ternary form for practice... really doubtful that this makes the code better though.. look into this later
+      sourceIdx = edge[0] === vertex ? 0 : edge[1] === vertex ? 1 : null
+      targetIdx = sourceIdx === 0 ? 1 : sourceIdx === 1 ? 0 : null
+      if (!sourceIdx){
         continue
       }
       if (!edge[sourceIdx].color){
